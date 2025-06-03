@@ -1,0 +1,13 @@
+<div class="welcome-container">
+  <h1 *ngIf="fullName; else guest">
+    Welcome, {{ fullName }}!
+  </h1>
+
+  <ng-template #guest>
+    <h1>Welcome, guest!</h1>
+  </ng-template>
+
+  <p class="description">
+    We're glad to have you here. Explore our site and enjoy your stay!
+  </p>
+</div>

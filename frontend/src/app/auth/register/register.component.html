@@ -1,0 +1,64 @@
+<div class="register-container">
+  <h2>Create an Account</h2>
+
+  <form (ngSubmit)="onSubmit()" #registerForm="ngForm" novalidate>
+    <label for="fullName">Full Name</label>
+    <input
+      id="fullName"
+      name="fullName"
+      [(ngModel)]="registerUser.fullName"
+      required
+      minlength="3"
+      placeholder="Your full name"
+      #fullName="ngModel"
+    />
+    <div class="error" *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)">
+      Full name is required (min 3 characters).
+    </div>
+
+    <label for="username">Username</label>
+    <input
+      id="username"
+      name="username"
+      [(ngModel)]="registerUser.username"
+      required
+      minlength="3"
+      placeholder="Choose a username"
+      #username="ngModel"
+    />
+    <div class="error" *ngIf="username.invalid && (username.dirty || username.touched)">
+      Username is required (min 3 characters).
+    </div>
+
+    <label for="email">Email</label>
+    <input
+      id="email"
+      name="email"
+      type="email"
+      [(ngModel)]="registerUser.email"
+      required
+      email
+      placeholder="your.email@example.com"
+      #email="ngModel"
+    />
+    <div class="error" *ngIf="email.invalid && (email.dirty || email.touched)">
+      Please enter a valid email.
+    </div>
+
+    <label for="password">Password</label>
+    <input
+      id="password"
+      name="password"
+      type="password"
+      [(ngModel)]="registerUser.password"
+      required
+      minlength="6"
+      placeholder="At least 6 characters"
+      #password="ngModel"
+    />
+    <div class="error" *ngIf="password.invalid && (password.dirty || password.touched)">
+      Password is required (min 6 characters).
+    </div>
+    <button type="submit" [disabled]="registerForm.invalid">Sign Up</button>
+  </form>
+</div>

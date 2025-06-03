@@ -1,0 +1,9 @@
+<header class="app-header">
+  <div *ngIf="userName; else loggedOut" class="user-info">
+    Welcome, {{ userName }}!
+    <button (click)="logout()">Logout</button>
+  </div>
+  <ng-template #loggedOut>
+    <div>Please log in.</div>
+  </ng-template>
+</header>
