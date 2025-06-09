@@ -7,7 +7,6 @@ import {UserService} from '../services/user.service';
   standalone: true,
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss'],
-  imports: [NgIf],
 })
 export class AdminComponent {
   userName: string | null = null;

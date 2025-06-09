@@ -1,4 +1,4 @@
-package ro.foame.employee_backend.services;
+package ro.foame.employee_backend.services.impl;
 
 import org.springframework.stereotype.Service;
 import ro.foame.employee_backend.entities.User;

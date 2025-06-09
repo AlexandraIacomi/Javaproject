@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export interface UserDetails {
   fullName: string;
   expirationTime: number;
-  roles: string;
+  roles: string[];
 }
 
 @Injectable({
@@ -21,14 +21,20 @@ export class UserService {
     return userData ? JSON.parse(userData) : null;
   }
 
-  public setUserDetails(details: UserDetails): void {
+  public setUserDetails(details: UserDetails, token: string): void {
     sessionStorage.setItem('userDetails', JSON.stringify(details));
+    sessionStorage.setItem('token', token);
 
     this.userDetailsSubject.next(details);
   }
 
+  public getToken(): string | null {
+    return sessionStorage.getItem('token');
+  }
+
   public clearUserDetails(): void {
     sessionStorage.removeItem('userDetails');
+    sessionStorage.removeItem('token');
     this.userDetailsSubject.next(null);
   }
 }

@@ -4,6 +4,7 @@ package ro.foame.employee_backend.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,13 +33,23 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf()
-                .disable()
+        http
+                .cors()
+                .and()
+                .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/auth/**", "/messages").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest()
-                .authenticated()
+                .requestMatchers(HttpMethod.GET, "/product/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/product/create").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/product/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PATCH, "/product/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/product/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/product/upload-image").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/categories/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/categories/**").permitAll()
+                .requestMatchers(HttpMethod.PATCH, "/categories/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -48,18 +59,21 @@ public class SecurityConfiguration {
 
         return http.build();
     }
-
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("http://localhost:8005"));
-        configuration.setAllowedMethods(List.of("GET","POST"));
-        configuration.setAllowedHeaders(List.of("Authorization","Content-Type"));
+
+        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Requested-With", "Accept"));
+
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-
-        source.registerCorsConfiguration("/**",configuration);
+        source.registerCorsConfiguration("/**", configuration);
 
         return source;
     }

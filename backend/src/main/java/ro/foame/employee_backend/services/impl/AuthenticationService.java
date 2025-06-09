@@ -1,4 +1,4 @@
-package ro.foame.employee_backend.services;
+package ro.foame.employee_backend.services.impl;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

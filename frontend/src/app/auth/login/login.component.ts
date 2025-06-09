@@ -15,7 +15,7 @@ interface LoginResponseDto {
   token: string;
   expirationTime: number;
   fullName: string;
-  roles: string;
+  roles: string[];
 }
 
 @Component({
@@ -41,12 +41,14 @@ export class LoginComponent {
     this.http.post<LoginResponseDto>('http://localhost:8080/auth/login', this.loginUser).subscribe({
       next: (response) => {
         sessionStorage.setItem('authToken', response.token);
-
-        this.userService.setUserDetails({
-          fullName: response.fullName,
-          expirationTime: response.expirationTime,
-          roles: response.roles
-        });
+        this.userService.setUserDetails(
+          {
+            fullName: response.fullName,
+            expirationTime: response.expirationTime,
+            roles: response.roles
+          },
+          response.token
+        );
 
         this.router.navigate(['/welcome']);
       },

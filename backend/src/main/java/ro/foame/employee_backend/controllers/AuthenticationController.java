@@ -1,17 +1,19 @@
 package ro.foame.employee_backend.controllers;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ro.foame.employee_backend.dtos.*;
-import ro.foame.employee_backend.emails.EmailVerificationToken;
+import ro.foame.employee_backend.dtos.LoginResponseDto;
+import ro.foame.employee_backend.dtos.LoginUserDto;
+import ro.foame.employee_backend.dtos.RegisterResponseDto;
+import ro.foame.employee_backend.dtos.RegisterUserDto;
 import ro.foame.employee_backend.entities.Role;
 import ro.foame.employee_backend.entities.User;
 import ro.foame.employee_backend.repositories.UserRepository;
-import ro.foame.employee_backend.services.AuthenticationService;
-import ro.foame.employee_backend.services.JwtService;
+import ro.foame.employee_backend.services.impl.AuthenticationService;
+import ro.foame.employee_backend.services.impl.JwtService;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/auth")

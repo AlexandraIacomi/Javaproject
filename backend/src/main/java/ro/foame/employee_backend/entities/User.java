@@ -5,11 +5,14 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.domain.Persistable;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Builder
 @Table(name= "users")
@@ -59,7 +62,14 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
-                .map(role -> (GrantedAuthority) role::getName)
+                .map(role -> {
+                    String roleName = role.getName();
+                    if (roleName.startsWith("ROLE_")) {
+                        return new SimpleGrantedAuthority(roleName);
+                    } else {
+                        return new SimpleGrantedAuthority("ROLE_" + roleName);
+                    }
+                })
                 .toList();
     }
 
