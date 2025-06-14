@@ -11,9 +11,9 @@
 
       <p-badge *ngIf="item.badge" class="ml-auto" [value]="item.badge"></p-badge>
 
-      <span *ngIf="item.shortcut" class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">
-      {{ item.shortcut }}
-    </span>
+      <span *ng1if="item.shortcut" class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">
+        {{ item.shortcut }}
+      </span>
 
       <i *ngIf="item.items" class="ml-auto pi pi-angle-right"></i>
     </a>
@@ -21,7 +21,15 @@
 
   <ng-template #end>
     <div *ngIf="userName; else loggedOut" class="flex items-center gap-3 user-info">
+      <ng-container *ngIf="!isAdmin">
+        <a [routerLink]="'/cart'" class="cart-icon-wrapper p-overlay-badge me-3">
+          <i class="pi pi-shopping-cart text-2xl" [ngClass]="{'text-primary-500': cartItemCount > 0, 'text-600': cartItemCount === 0}"></i>
+          <p-badge *ngIf="cartItemCount > 0" [value]="cartItemCount.toString()" severity="danger"></p-badge>
+        </a>
+      </ng-container>
+
       <span class="welcome-text">Welcome, {{ userName }}!</span>
+
       <p-button
         label="Logout"
         icon="pi pi-sign-out"
@@ -34,6 +42,10 @@
 
     <ng-template #loggedOut>
       <div class="please-login">Please log in.</div>
+
+      <ng-container *ngIf="!isAdmin">
+
+      </ng-container>
     </ng-template>
   </ng-template>
 </p-menubar>

@@ -37,4 +37,7 @@ export class UserService {
     sessionStorage.removeItem('token');
     this.userDetailsSubject.next(null);
   }
+  public isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
 }

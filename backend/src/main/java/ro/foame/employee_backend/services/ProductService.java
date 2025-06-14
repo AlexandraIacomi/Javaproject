@@ -30,4 +30,5 @@ public interface ProductService {
     ProductDto createProduct(ProductCreateDto productDto);
 
     Page<ProductDto> searchProducts(String searchTerm, Pageable pageable);
+    Page<ProductDto> filterByCategory(String categoryName, Pageable pageable);
 }

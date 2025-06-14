@@ -29,7 +29,7 @@ public class ProductController {
     @GetMapping(path = "/all")
     public ResponseEntity<Page<ProductDto>> getAllProducts(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "12") int size) {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<ProductDto> productPage = productService.getAllProducts(pageable);
@@ -46,10 +46,20 @@ public class ProductController {
     public ResponseEntity<Page<ProductDto>> searchProducts(
             @RequestParam String term,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "12") int size
     ){
         Pageable pageable = PageRequest.of(page, size);
         Page<ProductDto> productPage = productService.searchProducts(term, pageable);
+        return ResponseEntity.ok(productPage);
+    }
+    @GetMapping("/filter")
+    public ResponseEntity<Page<ProductDto>> filterProducts(
+            @RequestParam String category,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int size
+    ){
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ProductDto> productPage = productService.filterByCategory(category, pageable);
         return ResponseEntity.ok(productPage);
     }
 

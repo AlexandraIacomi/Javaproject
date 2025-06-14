@@ -10,6 +10,7 @@ import ro.foame.employee_backend.dtos.ProductDto;
 import ro.foame.employee_backend.entities.Category;
 import ro.foame.employee_backend.entities.Product;
 import ro.foame.employee_backend.mappers.Mapper;
+import ro.foame.employee_backend.mappers.imp.ProductMapper;
 import ro.foame.employee_backend.repositories.CategoryRepository;
 import ro.foame.employee_backend.repositories.ProductRepository;
 import ro.foame.employee_backend.services.ProductService;
@@ -25,13 +26,15 @@ public class ProductServiceImpl implements ProductService {
     private final Mapper<Product, ProductDto> mapper;
     private final Mapper<Product, ProductCreateDto> createmapper;
     private final CategoryRepository categoryRepository;
+    private final ProductMapper productMapper;
 
 
-    public ProductServiceImpl(ProductRepository productRepository, Mapper<Product, ProductDto> mapper, Mapper<Product, ProductCreateDto> createmapper, CategoryRepository categoryRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, Mapper<Product, ProductDto> mapper, Mapper<Product, ProductCreateDto> createmapper, CategoryRepository categoryRepository, ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.mapper = mapper;
         this.createmapper = createmapper;
         this.categoryRepository = categoryRepository;
+        this.productMapper = productMapper;
     }
 
     @Override
@@ -50,6 +53,11 @@ public class ProductServiceImpl implements ProductService {
         Page<Product> productPage = productRepository
                 .findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(searchTerm, searchTerm, pageable);
         return productPage.map(mapper::mapTo);
+    }
+
+    @Override
+    public Page<ProductDto> filterByCategory(String categoryName, Pageable pageable) {
+        return productRepository.findByCategoryNameIgnoreCase(categoryName, pageable).map(productMapper::mapTo);
     }
 
     @Override

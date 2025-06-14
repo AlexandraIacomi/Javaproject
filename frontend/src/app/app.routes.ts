@@ -8,11 +8,14 @@ import {LoginGuard} from './guards/login.guard';
 import {ProductListComponent} from './admin/product/product-list/product-list.component';
 import {ProductCreateComponent} from './admin/product/product-create/product-create.component';
 import {ProductEditComponent} from './admin/product/product-edit/product-edit.component';
-import {ProductViewComponent} from './admin/product/product-view/product-view.component';
 import {CategoryEditComponent} from './admin/category/category-edit/category-edit.component';
 import {CategoryListComponent} from './admin/category/category-list/category-list.component';
 import {CategoryCreateComponent} from './admin/category/category-create/category-create.component';
 import {ProductlistComponent} from './products/productlist/productlist.component';
+import {ProductviewComponent} from './products/productview/productview.component';
+import {CartComponent} from './cart/cart.component';
+import {LoggedGuard} from './logged.guard';
+import {OrderComponent} from './order/order.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
@@ -22,12 +25,14 @@ export const routes: Routes = [
   { path: 'admin/products/:slug/edit', component: ProductEditComponent, canActivate: [AuthGuard] },
   { path: 'admin/products', component: ProductListComponent, canActivate: [AuthGuard]  },
   { path: 'admin/products/create', component: ProductCreateComponent, canActivate: [AuthGuard]  },
-  { path: 'admin/products/:id', component: ProductViewComponent, canActivate: [AuthGuard]  },
   { path: 'admin/categories/:id/edit', component: CategoryEditComponent, canActivate: [AuthGuard] },
   { path: 'admin/categories', component: CategoryListComponent, canActivate: [AuthGuard]  },
   { path: 'admin/categories/create', component: CategoryCreateComponent, canActivate: [AuthGuard]  },
-  { path: 'products/:slug', component: ProductViewComponent },
+  { path: 'products/:slug', component: ProductviewComponent },
   { path: 'products', component: ProductlistComponent},
+  { path: 'cart', component: CartComponent, canActivate: [LoggedGuard] },
+  { path: 'order', component: OrderComponent, canActivate: [LoggedGuard] },
   { path: '', redirectTo: '/welcome', pathMatch: 'full' },
   { path: '**', redirectTo: '/welcome' },
+
 ];
