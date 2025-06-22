@@ -32,4 +32,17 @@ export class OrderService {
     return this.http.post<OrderDto>(`${this.apiUrl}/create`, order, { headers });
   }
 
+  // New method to confirm payment status with backend
+  confirmPayPalPayment(paypalOrderId: string, localOrderId: number): Observable<string> {
+    const headers = this.getAuthHeaders();
+    return this.http.post(`${this.apiUrl}/paypal/confirm?paypalOrderId=${paypalOrderId}&orderId=${localOrderId}`, null, { headers, responseType: 'text' });
+  }
+
+  // Ensure this method is correctly defined if you use it for cancellation
+  cancelOrder(orderId: number): Observable<string> {
+    const headers = this.getAuthHeaders();
+    // Assuming your backend handleCancel endpoint is a GET that takes orderId
+    return this.http.get(`${this.apiUrl}/paypal/cancel?orderId=${orderId}`, { headers, responseType: 'text' });
+  }
+
 }

@@ -49,6 +49,12 @@ public class Order {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "paypal_order_id")
+    private String paypalOrderId;
+
+    @Column(name = "payment_status")
+    private String paymentStatus;
+
     @PrePersist
     public void prePersist() {
         createdAt = LocalDateTime.now();

@@ -11,8 +11,12 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class OrderDto {
+    private Integer id;
     private String customerName;
     private String address;
     private String phoneNumber;
     private List<OrderItemDto> orderItems;
+    private String paypalOrderId;
+    private String approvalLink;
+    private String status;
 }
